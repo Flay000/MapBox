@@ -17,15 +17,16 @@ const App = () => {
   const [popupInfo, setPopupInfo] = useState(null);
 
   // Coordenadas para o marcador
-  const markerLatitude = -20.309;
-  const markerLongitude = -40.290;
+  const markerLatitude = -20.351;
+  const markerLongitude = -40.297;
+  // -20.351998642310924, -40.297696703406885
 
   // Função para adicionar um popup ao clicar no marcador
   const handleMarkerClick = () => {
     setPopupInfo({
       latitude: markerLatitude,
       longitude: markerLongitude,
-      name: 'Multicar Mega Store',
+      name: 'Multicar  Multimarcas',
     });
   };
 
@@ -48,7 +49,7 @@ const App = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 2, ease: 'easeOut' }}
           >
-            Como Chegar Na Multicar Mega Store
+            Como Chegar Na Multicar Multimarcas 
           </motion.h1>
         </div>
       </header>
@@ -60,16 +61,24 @@ const App = () => {
           width="100%"
           height="100%"
           mapboxApiAccessToken={MAPBOX_TOKEN}  // Certifique-se de que o token está correto
-          mapStyle="mapbox://styles/joao-silva123/cm384g2xn01hm01pd6olb5ft1" // Estilo do mapa
+          mapStyle="mapbox://styles/joao-silva123/cm3f8idj6002401s15xsl5cti" // Estilo do mapa
           onViewportChange={(nextViewport) => setViewport(nextViewport)}
         >
           {/* Adicionando um marcador no local desejado */}
-          <Marker latitude={markerLatitude} longitude={markerLongitude}>
+          <Marker
+            latitude={markerLatitude}
+            longitude={markerLongitude}
+            anchor="bottom" // Isso garante que o marcador será posicionado corretamente no ponto de ancoragem
+          >
             <div
               style={{ cursor: 'pointer' }}
-              onClick={handleMarkerClick}  // Adiciona evento de clique ao marcador
+              onClick={handleMarkerClick}
             >
-              <img src={logo} alt="Marcador" style={{ width: 80, height: 80 }} />
+              <img
+                src={logo}
+                alt="Marcador"
+                style={{ width: 50, height: 50 }} // Tamanho maior da imagem
+              />
             </div>
           </Marker>
 
@@ -79,8 +88,17 @@ const App = () => {
               latitude={popupInfo.latitude}
               longitude={popupInfo.longitude}
               onClose={() => setPopupInfo(null)} // Fecha o popup
+              closeButton={false}  // Opcional: remove o botão de fechar do popup
+              offset={[0, -30]}  // Ajusta a posição do popup
             >
-              <div>{popupInfo.name}</div>
+              <div style={popupStyles}>
+                <h3 style={popupTitleStyles}>{popupInfo.name}</h3>
+                <p style={popupDescriptionStyles}>Encontre nossa loja e aproveite as ofertas!
+                </p>
+                <p style={popupDescriptionStyles}>
+                (27) 3010-3805
+                </p>
+              </div>
             </Popup>
           )}
         </ReactMapGL>
@@ -96,7 +114,6 @@ const headerStyles = {
   color: '#fff', // Cor do texto
   textAlign: 'center', // Centraliza o conteúdo
 };
-
 
 // Contêiner para logo e título
 const logoContainerStyles = {
@@ -117,7 +134,30 @@ const titleStyles = {
   margin: 0,
   fontSize: '24px', // Tamanho do título
   fontFamily: "'Playfair Display', serif",
-  color: '#0a1721'
+  color: '#0a1721',
+};
+
+// Estilos do popup (tooltip)
+const popupStyles = {
+  backgroundColor: '#179B97',
+  padding: '10px 15px',
+  borderRadius: '8px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Sombra sutil
+  width: '200px',
+  fontFamily: 'Arial, sans-serif',
+};
+
+const popupTitleStyles = {
+  fontSize: '18px',
+  fontWeight: 'bold',
+  color: 'blue',
+  margin: '0 0 5px 0',
+};
+
+const popupDescriptionStyles = {
+  fontSize: '14px',
+  color: '#555',
+  margin: 0,
 };
 
 export default App;
