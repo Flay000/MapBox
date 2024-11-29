@@ -18,8 +18,6 @@ const App = () => {
 
   const [popupInfo, setPopupInfo] = useState(null);
 
-
-
   // Função para adicionar um popup ao clicar no marcador
   const handleMarkerClick = () => {
     setPopupInfo({
@@ -53,8 +51,6 @@ const App = () => {
         </div>
       </header>
 
-    
-
       {/* Mapa */}
       <div style={{ flex: 1 }}>
         <ReactMapGL
@@ -64,6 +60,7 @@ const App = () => {
           mapboxApiAccessToken={MAPBOX_TOKEN}
           mapStyle="mapbox://styles/joao-silva123/cm3z66xqg00h401s0dm5b6fzr"
           onViewportChange={(nextViewport) => setViewport(nextViewport)}
+          attributionControl={false}  // Remove o ícone de atribuição do Mapbox
         >
           {/* Adicionando um marcador no local desejado */}
           <Marker
@@ -107,6 +104,35 @@ const App = () => {
           )}
         </ReactMapGL>
       </div>
+
+      {/* CSS responsivo dentro de uma tag <style> */}
+      <style>{`
+        @media (max-width: 768px) {
+          header {
+            height: 120px;
+          }
+          header h1 {
+            font-size: 18px;
+          }
+          header img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+        @media (max-width: 480px) {
+          header {
+            height: 100px;
+            padding: 10px 15px;
+          }
+          header h1 {
+            font-size: 16px;
+          }
+          header img {
+            width: 35px;
+            height: 35px;
+          }
+        }
+      `}</style>
     </div>
   );
 };
@@ -172,34 +198,5 @@ const popupDescriptionStyles = {
   color: '#ffff',
   margin: 0,
 };
-
-// Responsividade para dispositivos móveis
-const mediaQueries = `
-  @media (max-width: 768px) {
-    header {
-      height: 120px;
-    }
-    header h1 {
-      font-size: 18px;
-    }
-    header img {
-      width: 40px;
-      height: 40px;
-    }
-  }
-  @media (max-width: 480px) {
-    header {
-      height: 100px;
-      padding: 10px 15px;
-    }
-    header h1 {
-      font-size: 16px;
-    }
-    header img {
-      width: 35px;
-      height: 35px;
-    }
-  }
-`;
 
 export default App;
